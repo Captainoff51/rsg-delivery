@@ -10,10 +10,7 @@ local missionactive = false
 
 -- mission timer
 local function MissionTimer(missiontime, vehicle, endcoords)
-    
     MissionSecondsRemaining = (missiontime * 60)
-
-    missionactive = true
 
     Citizen.CreateThread(function()
         while true do
@@ -29,17 +26,12 @@ local function MissionTimer(missiontime, vehicle, endcoords)
                     lib.notify({ title = 'Delivery Failed', description = 'you ran out of time, mission failed', type = 'error' })
                 end
             end
-            Wait(0)
-        end
-    end)
 
-    Citizen.CreateThread(function()
-        while true do
-            if not lib.isTextUIOpen() then
-                lib.showTextUI('Delivery Time Remaining: '.. MissionSecondsRemaining)
-                if not missionactive then
-                    lib.hideTextUI()
-                end
+            if missionactive == true then
+                lib.showTextUI('Delivery Time Remaining: '..MissionSecondsRemaining)
+                Wait(0)
+            else
+                lib.hideTextUI()
             end
             Wait(0)
         end
