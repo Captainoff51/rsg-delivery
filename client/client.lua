@@ -28,7 +28,10 @@ local function MissionTimer(missiontime, vehicle, endcoords)
             end
 
             if missionactive == true then
-                lib.showTextUI('Delivery Time Remaining: '..MissionSecondsRemaining)
+                local minutes = math.floor((MissionSecondsRemaining % 3600) / 60) -- El resto de segundos convertidos a minutos
+                local seconds = MissionSecondsRemaining % 60 -- Los segundos restantes
+                
+                lib.showTextUI('Delivery Time Remaining: '..minutes..':'..seconds)
                 Wait(0)
             else
                 lib.hideTextUI()
