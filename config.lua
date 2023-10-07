@@ -13,7 +13,7 @@ Config.DeliveryLocations = {
     {   -- saint denis -> valentine ( distance 3794 / $37.94)
         name        = 'Valentine Delivery',
         deliveryid  = 'delivery1',
-        cartspawn   = vector4(2898.8957, -1169.942, 46.093143, 100.06992),
+        cartspawn   = vector4(2898.8957, -1169.942, 46.293143, 100.06992),
         cart        = 'wagon04x',
         cargo       = 'pg_teamster_wagon04x_gen',
         light       = 'pg_teamster_wagon04x_lightupgrade3',
@@ -26,7 +26,7 @@ Config.DeliveryLocations = {
     {   -- valentine -> blackwater ( distance 2200 / $22.00)
         name        = 'Blackwater Delivery',
         deliveryid  = 'delivery2',
-        cartspawn   = vector4(-343.9931, 809.86401, 116.6878, 132.8083), 
+        cartspawn   = vector4(-343.9931, 809.86401, 116.8878, 132.8083), 
         cart        = 'wagon04x',
         cargo       = 'pg_teamster_wagon04x_perishables',
         light       = 'pg_teamster_wagon04x_lightupgrade3',
@@ -39,7 +39,7 @@ Config.DeliveryLocations = {
     {   -- blackwater -> strawberry ( distance 1303 / $13.03)
         name        = 'Strawberry Delivery',
         deliveryid  = 'delivery3',
-        cartspawn   = vector4(-757.1296, -1225.244, 43.54446, 0.8211954), 
+        cartspawn   = vector4(-757.1296, -1225.244, 43.74446, 0.8211954), 
         cart        = 'cart01',
         cargo       = 'pg_teamster_cart01_breakables',
         light       = 'pg_teamster_cart01_lightupgrade3',
@@ -52,7 +52,7 @@ Config.DeliveryLocations = {
     {   -- strawberry -> mcfarlands ranch ( distance 2033 / $20.33)
         name        = 'Ranch Delivery',
         deliveryid  = 'delivery4',
-        cartspawn   = vector4(-1788.618, -439.5259, 155.18444, 80.844512), 
+        cartspawn   = vector4(-1788.618, -439.5259, 155.38444, 80.844512), 
         cart        = 'wagon02x',
         cargo       = 'pg_vl_rancher01',
         light       = 'pg_teamster_wagon02x_lightupgrade3',
@@ -65,7 +65,7 @@ Config.DeliveryLocations = {
     {   -- mcfarlands ranch -> tumbleweed  ( distance 3214 / $32.14)
         name        = 'Tumbleweed Delivery',
         deliveryid  = 'delivery5',
-        cartspawn   = vector4(-2352.572, -2398.797, 62.061191, 175.71217), 
+        cartspawn   = vector4(-2352.572, -2398.797, 62.261191, 175.71217), 
         cart        = 'wagon05x',
         cargo       = 'pg_teamster_wagon05x_gen',
         light       = 'pg_teamster_wagon05x_lightupgrade3',
@@ -78,7 +78,7 @@ Config.DeliveryLocations = {
     {   -- tumbleweed -> annesburg  ( distance 9595 / $95.95)
         name        = 'The Long Run',
         deliveryid  = 'delivery6',
-        cartspawn   = vector4(-5523.004, -2936.102, -2.007142, 255.0812), 
+        cartspawn   = vector4(-5523.004, -2936.102, -1.807142, 255.0812), 
         cart        = 'wagon02x',
         cargo       = 'pg_gunforhire03x',
         light       = 'pg_teamster_wagon02x_lightupgrade3',
@@ -91,7 +91,7 @@ Config.DeliveryLocations = {
     {   -- oil fields -> van horn  ( distance 2528 / $25.28)
         name        = 'The Oil Run',
         deliveryid  = 'delivery7',
-        cartspawn   = vector4(439.78543, 699.36962, 116.86561, 122.11738), 
+        cartspawn   = vector4(439.78543, 699.36962, 117.06561, 122.11738), 
         cart        = 'oilWagon02x',
         cargo       = '',
         light       = '',
