@@ -4,7 +4,7 @@ game 'rdr3'
 
 author 'RexShack#3041'
 description 'rsg-delivery'
-version '1.0.4'
+version '1.0.5'
 
 shared_scripts {
     '@ox_lib/init.lua',
