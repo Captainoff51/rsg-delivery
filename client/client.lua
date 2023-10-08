@@ -75,7 +75,9 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
         local carthash = GetHashKey(cart)
         local cargohash = GetHashKey(cargo)
         local lighthash = GetHashKey(light)
-        local distance = GetDistanceBetweenCoords(cartspawn.x, cartspawn.y, cartspawn.z, endcoords.x, endcoords.y, endcoords.z) 
+        local coordsCartSpawn = vector3(cartspawn.x, cartspawn.y, cartspawn.z)
+        local coordsEnd = vector3(endcoords.x, endcoords.y, endcoords.z)
+        local distance = #(coordsCartSpawn - coordsEnd) 
         local cashreward = (math.floor(distance) / 100)
         
         if Config.Debug == true then
