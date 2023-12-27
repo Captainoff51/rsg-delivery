@@ -23,7 +23,7 @@ local function MissionTimer(missiontime, vehicle, endcoords)
                     DeleteVehicle(vehicle)
                     wagonSpawned = false
                     missionactive = false
-                    lib.notify({ title = 'Delivery Failed', description = 'you ran out of time, mission failed', type = 'error' })
+                    lib.notify({ title = Lang:t('label.failed_del'), description = Lang:t('label.failed_del_descr'), type = 'error' })
                 end
             end
 
@@ -31,7 +31,7 @@ local function MissionTimer(missiontime, vehicle, endcoords)
                 local minutes = math.floor((MissionSecondsRemaining % 3600) / 60) -- El resto de segundos convertidos a minutos
                 local seconds = MissionSecondsRemaining % 60 -- Los segundos restantes
                 
-                lib.showTextUI('Delivery Time Remaining: '..minutes..':'..seconds)
+                lib.showTextUI(Lang:t('label.delivery_time')..minutes..':'..seconds)
                 Wait(0)
             else
                 lib.hideTextUI()
@@ -117,7 +117,7 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
                 local vehpos = GetEntityCoords(vehicle, true)
                 if #(vehpos - endcoords) < 250.0 then
                     sleep = 0
-                    DrawText3D(endcoords.x, endcoords.y, endcoords.z + 0.98, "DELIVERY POINT")
+                    DrawText3D(endcoords.x, endcoords.y, endcoords.z + 0.98, Lang:t('label.delivery_point'))
                     if #(vehpos - endcoords) < 3.0 then
                         if showgps == true then
                             ClearGpsMultiRoute(endcoords)
@@ -127,7 +127,7 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
                         TriggerServerEvent('rsg-delivery:server:givereward', cashreward)
                         wagonSpawned = false
                         missionactive = false
-                        lib.notify({ title = 'Delivery Sucessful', description = 'you completed your delivery', type = 'success' })
+                        lib.notify({ title = Lang:t('success.success_del'), description = Lang:t('success.success_del_descr'), type = 'success' })
                     end
                 end
             end

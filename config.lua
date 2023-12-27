@@ -3,7 +3,7 @@ Config = {}
 Config.Debug = false
 
 Config.Blip = {
-    blipName = 'Delivery Job', -- Config.Blip.blipName
+    blipName = Lang:t('label.delivery_blip'),  -- Config.Blip.blipName
     blipSprite = 'blip_ambient_delivery', -- Config.Blip.blipSprite
     blipScale = 0.2 -- Config.Blip.blipScale
 }
@@ -11,7 +11,7 @@ Config.Blip = {
 -- delivery locations
 Config.DeliveryLocations = {
     {   -- saint denis -> valentine ( distance 3794 / $37.94)
-        name        = 'Valentine Delivery',
+        name        = Lang:t('primary.delivery_loc1'),
         deliveryid  = 'delivery1',
         cartspawn   = vector4(2898.8957, -1169.942, 46.293143, 100.06992),
         cart        = 'wagon04x',
@@ -24,7 +24,7 @@ Config.DeliveryLocations = {
         showblip    = true
     },
     {   -- valentine -> blackwater ( distance 2200 / $22.00)
-        name        = 'Blackwater Delivery',
+        name        = Lang:t('primary.delivery_loc2'),
         deliveryid  = 'delivery2',
         cartspawn   = vector4(-343.9931, 809.86401, 116.8878, 132.8083), 
         cart        = 'wagon04x',
@@ -37,7 +37,7 @@ Config.DeliveryLocations = {
         showblip    = true
     },
     {   -- blackwater -> strawberry ( distance 1303 / $13.03)
-        name        = 'Strawberry Delivery',
+        name        = Lang:t('primary.delivery_loc3'),
         deliveryid  = 'delivery3',
         cartspawn   = vector4(-757.1296, -1225.244, 43.74446, 0.8211954), 
         cart        = 'cart01',
@@ -50,7 +50,7 @@ Config.DeliveryLocations = {
         showblip    = true
     },
     {   -- strawberry -> mcfarlands ranch ( distance 2033 / $20.33)
-        name        = 'Ranch Delivery',
+        name        = Lang:t('primary.delivery_loc4'),
         deliveryid  = 'delivery4',
         cartspawn   = vector4(-1788.618, -439.5259, 155.38444, 80.844512), 
         cart        = 'wagon02x',
@@ -63,7 +63,7 @@ Config.DeliveryLocations = {
         showblip    = true
     },
     {   -- mcfarlands ranch -> tumbleweed  ( distance 3214 / $32.14)
-        name        = 'Tumbleweed Delivery',
+        name        = Lang:t('primary.delivery_loc5'),
         deliveryid  = 'delivery5',
         cartspawn   = vector4(-2352.572, -2398.797, 62.261191, 175.71217), 
         cart        = 'wagon05x',
@@ -76,7 +76,7 @@ Config.DeliveryLocations = {
         showblip    = true
     },
     {   -- tumbleweed -> annesburg  ( distance 9595 / $95.95)
-        name        = 'The Long Run',
+        name        = Lang:t('primary.delivery_loc6'),
         deliveryid  = 'delivery6',
         cartspawn   = vector4(-5523.004, -2936.102, -1.807142, 255.0812), 
         cart        = 'wagon02x',
@@ -89,7 +89,7 @@ Config.DeliveryLocations = {
         showblip    = true
     },
     {   -- oil fields -> van horn  ( distance 2528 / $25.28)
-        name        = 'The Oil Run',
+        name        = Lang:t('primary.delivery_loc7'),
         deliveryid  = 'delivery7',
         cartspawn   = vector4(439.78543, 699.36962, 117.06561, 122.11738), 
         cart        = 'oilWagon02x',
