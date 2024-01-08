@@ -8,8 +8,34 @@ local MissionSecondsRemaining = 0
 local missiontime = 0
 local missionactive = false
 
+----------------------------------------------------
+-- function format mission time
+----------------------------------------------------
+function secondsToClock(seconds)
+    local hours = math.floor(seconds / 3600)
+    local minutes = math.floor((seconds % 3600) / 60)
+    local seconds = math.floor(seconds % 60)
+    return string.format("%02d:%02d:%02d", hours, minutes, seconds)
+end
+
+----------------------------------------------------
+-- function drawtext
+----------------------------------------------------
+function DrawText3D(x, y, z, text)
+    local onScreen,_x,_y=GetScreenCoordFromWorldCoord(x, y, z)
+    SetTextScale(0.35, 0.35)
+    SetTextFontForCurrentCommand(9)
+    SetTextColor(255, 255, 255, 215)
+    local str = CreateVarString(10, "LITERAL_STRING", text, Citizen.ResultAsLong())
+    SetTextCentre(1)
+    DisplayText(str,_x,_y)
+end
+
+----------------------------------------------------
 -- mission timer
+----------------------------------------------------
 local function MissionTimer(missiontime, vehicle, endcoords)
+    
     MissionSecondsRemaining = (missiontime * 60)
 
     Citizen.CreateThread(function()
@@ -28,10 +54,8 @@ local function MissionTimer(missiontime, vehicle, endcoords)
             end
 
             if missionactive == true then
-                local minutes = math.floor((MissionSecondsRemaining % 3600) / 60) -- El resto de segundos convertidos a minutos
-                local seconds = MissionSecondsRemaining % 60 -- Los segundos restantes
-                
-                lib.showTextUI(Lang:t('label.delivery_time')..minutes..':'..seconds)
+                local formattedTime = secondsToClock(MissionSecondsRemaining)
+                lib.showTextUI(Lang:t('label.delivery_time')..formattedTime)
                 Wait(0)
             else
                 lib.hideTextUI()
@@ -41,17 +65,9 @@ local function MissionTimer(missiontime, vehicle, endcoords)
     end)
 end
 
-function DrawText3D(x, y, z, text)
-    local onScreen,_x,_y=GetScreenCoordFromWorldCoord(x, y, z)
-    SetTextScale(0.35, 0.35)
-    SetTextFontForCurrentCommand(9)
-    SetTextColor(255, 255, 255, 215)
-    local str = CreateVarString(10, "LITERAL_STRING", text, Citizen.ResultAsLong())
-    SetTextCentre(1)
-    DisplayText(str,_x,_y)
-end
-
+----------------------------------------------------
 -- prompts and blips
+----------------------------------------------------
 Citizen.CreateThread(function()
     for delivery, v in pairs(Config.DeliveryLocations) do
         exports['rsg-core']:createPrompt(v.deliveryid, v.startcoords, RSGCore.Shared.Keybinds['J'], v.name, {
@@ -68,6 +84,9 @@ Citizen.CreateThread(function()
     end
 end)
 
+----------------------------------------------------
+-- spawn wagon / set mission
+----------------------------------------------------
 RegisterNetEvent('rsg-delivery:client:vehiclespawn')
 AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, cartspawn, cargo, light, endcoords, showgps, missiontime)
     if wagonSpawned == false then
@@ -124,9 +143,10 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
                         end
                         endcoords = nil
                         DeleteVehicle(vehicle)
-                        TriggerServerEvent('rsg-delivery:server:givereward', cashreward)
                         wagonSpawned = false
                         missionactive = false
+                        MissionSecondsRemaining = 0
+                        TriggerServerEvent('rsg-delivery:server:givereward', cashreward)
                         lib.notify({ title = Lang:t('success.success_del'), description = Lang:t('success.success_del_descr'), type = 'success' })
                     end
                 end

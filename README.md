@@ -1,23 +1,9 @@
+# rsg-delivery
+
 # RexshackGaming
 - discord : https://discord.gg/eW3ADkf4Af
-- youtube : https://www.youtube.com/channel/UCikEgGfXO-HCPxV5rYHEVbA
+- youtube : https://www.youtube.com/@rexshack/videos
 - github : https://github.com/Rexshack-RedM
-
-# Warning
-- this resource is still in development / testing
-- do NOT use in production
-
-# Dependancies
-- rsg-core
-- rsg-npcs
-
-# Installation
-- ensure that the dependancies are added and started
-- add rsg-delivery to your resources folder
-- add the NPCs Config to rsg-npcs -> config.lua
-
-# Starting the resource
-- add the following to your server.cfg file : ensure rsg-delivery
 
 # NPCs Config
 ```lua

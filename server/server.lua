@@ -31,6 +31,9 @@ end
 
 -----------------------------------------------------------------------
 
+----------------------------------------------------
+-- give cash reward
+----------------------------------------------------
 RegisterNetEvent('rsg-delivery:server:givereward', function(cashreward)
     local src = source
     local Player = RSGCore.Functions.GetPlayer(src)
