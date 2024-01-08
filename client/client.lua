@@ -3,6 +3,7 @@ local carthash = nil
 local cargohash = nil
 local lighthash = nil
 local distance = nil
+local currentMissionWagon = nil
 local wagonSpawned = false
 local MissionSecondsRemaining = 0
 local missiontime = 0
@@ -127,13 +128,14 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
             AddPointToGpsMultiRoute(endcoords)
             SetGpsMultiRouteRender(true)
         end
+        currentMissionWagon = vehicle
         wagonSpawned = true
         missionactive = true
         MissionTimer(missiontime, vehicle, endcoords)
         while true do
             local sleep = 1000
             if wagonSpawned == true then
-                local vehpos = GetEntityCoords(vehicle, true)
+                local vehpos = GetEntityCoords(currentMissionWagon, true)
                 if #(vehpos - endcoords) < 250.0 then
                     sleep = 0
                     DrawText3D(endcoords.x, endcoords.y, endcoords.z + 0.98, Lang:t('label.delivery_point'))
@@ -142,16 +144,40 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
                             ClearGpsMultiRoute(endcoords)
                         end
                         endcoords = nil
-                        DeleteVehicle(vehicle)
+                        DeleteVehicle(currentMissionWagon)
                         wagonSpawned = false
                         missionactive = false
                         MissionSecondsRemaining = 0
+                        SetEntityAsNoLongerNeeded(currentMissionWagon)
                         TriggerServerEvent('rsg-delivery:server:givereward', cashreward)
                         lib.notify({ title = Lang:t('success.success_del'), description = Lang:t('success.success_del_descr'), type = 'success' })
                     end
                 end
             end
             Wait(sleep)
+        end
+    end
+end)
+
+---------------------------------------------------------------------
+-- get wagon state / fail mission if damaged
+---------------------------------------------------------------------
+Citizen.CreateThread(function()
+    while true do
+        Wait(1000)
+        if wagonSpawned then
+            local drivable = Citizen.InvokeNative(0xB86D29B10F627379, currentMissionWagon, false, false) -- IsVehicleDriveable
+            if not drivable then
+                lib.notify({ title = 'Mission Failed!', description = 'your mission failed due to damaged wagon!', type = 'inform', duration = 7000 })
+                DeleteVehicle(currentMissionWagon)
+                wagonSpawned = false
+                missionactive = false
+                MissionSecondsRemaining = 0
+                SetEntityAsNoLongerNeeded(currentMissionWagon)
+                wagonSpawned = false
+                ClearGpsMultiRoute()
+                lib.hideTextUI()
+            end
         end
     end
 end)
