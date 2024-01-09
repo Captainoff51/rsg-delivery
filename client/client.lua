@@ -50,7 +50,7 @@ local function MissionTimer(missiontime, vehicle, endcoords)
                     DeleteVehicle(vehicle)
                     wagonSpawned = false
                     missionactive = false
-                    lib.notify({ title = Lang:t('label.failed_del'), description = Lang:t('label.failed_del_descr'), type = 'error' })
+                    lib.notify({ title = Lang:t('error.failed_del'), description = Lang:t('error.failed_del_descr'), type = 'error' })
                 end
             end
 
