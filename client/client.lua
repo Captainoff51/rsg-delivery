@@ -3,14 +3,14 @@ local carthash = nil
 local cargohash = nil
 local lighthash = nil
 local distance = nil
-local currentMissionWagon = nil
+local currentDeliveryWagon = nil
 local wagonSpawned = false
-local MissionSecondsRemaining = 0
-local missiontime = 0
-local missionactive = false
+local DeliverySecondsRemaining = 0
+local deliverytime = 0
+local deliveryactive = false
 
 ----------------------------------------------------
--- function format mission time
+-- function format delivery time
 ----------------------------------------------------
 function secondsToClock(seconds)
     local hours = math.floor(seconds / 3600)
@@ -33,33 +33,42 @@ function DrawText3D(x, y, z, text)
 end
 
 ----------------------------------------------------
--- mission timer
+-- delivery timer
 ----------------------------------------------------
-local function MissionTimer(missiontime, vehicle, endcoords)
+local function DeliveryTimer(deliverytime, vehicle, endcoords)
     
-    MissionSecondsRemaining = (missiontime * 60)
+    DeliverySecondsRemaining = (deliverytime * 60)
 
     Citizen.CreateThread(function()
         while true do
-            if MissionSecondsRemaining > 0 then
+            if DeliverySecondsRemaining > 0 then
                 Wait(1000)
-                MissionSecondsRemaining = MissionSecondsRemaining - 1
-                if MissionSecondsRemaining == 0 and wagonSpawned == true then
+                DeliverySecondsRemaining = DeliverySecondsRemaining - 1
+                if DeliverySecondsRemaining == 0 and wagonSpawned == true then
                     ClearGpsMultiRoute(endcoords)
                     endcoords = nil
                     DeleteVehicle(vehicle)
                     wagonSpawned = false
-                    missionactive = false
+                    deliveryactive = false
                     lib.notify({ title = Lang:t('error.failed_del'), description = Lang:t('error.failed_del_descr'), type = 'error' })
                 end
             end
 
-            if missionactive == true then
-                local formattedTime = secondsToClock(MissionSecondsRemaining)
-                lib.showTextUI(Lang:t('label.delivery_time')..formattedTime)
+            if deliveryactive == true then
+                local formattedTime = secondsToClock(DeliverySecondsRemaining)
+                lib.showTextUI('Time Remaining : '..formattedTime, {
+                    position = "top-center",
+                    icon = 'fa-regular fa-clock',
+                    style = {
+                        borderRadius = 0,
+                        backgroundColor = '#82283E',
+                        color = 'white'
+                    }
+                })
                 Wait(0)
             else
                 lib.hideTextUI()
+                return
             end
             Wait(0)
         end
@@ -74,11 +83,11 @@ Citizen.CreateThread(function()
         exports['rsg-core']:createPrompt(v.deliveryid, v.startcoords, RSGCore.Shared.Keybinds['J'], v.name, {
             type = 'client',
             event = 'rsg-delivery:client:vehiclespawn',
-            args = { v.deliveryid, v.cart, v.cartspawn, v.cargo, v.light, v.endcoords, v.showgps, v.missiontime },
+            args = { v.deliveryid, v.cart, v.cartspawn, v.cargo, v.light, v.endcoords, v.showgps, v.deliverytime },
         })
         if v.showblip == true then
             local DeliveryBlip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, v.startcoords)
-            SetBlipSprite(DeliveryBlip, GetHashKey(Config.Blip.blipSprite), true)
+            SetBlipSprite(DeliveryBlip, joaat(Config.Blip.blipSprite), true)
             SetBlipScale(DeliveryBlip, Config.Blip.blipScale)
             Citizen.InvokeNative(0x9CB1A1623062F402, DeliveryBlip, Config.Blip.blipName)
         end
@@ -86,15 +95,15 @@ Citizen.CreateThread(function()
 end)
 
 ----------------------------------------------------
--- spawn wagon / set mission
+-- spawn wagon / set delivery
 ----------------------------------------------------
 RegisterNetEvent('rsg-delivery:client:vehiclespawn')
-AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, cartspawn, cargo, light, endcoords, showgps, missiontime)
+AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, cartspawn, cargo, light, endcoords, showgps, deliverytime)
     if wagonSpawned == false then
         local playerPed = PlayerPedId()
-        local carthash = GetHashKey(cart)
-        local cargohash = GetHashKey(cargo)
-        local lighthash = GetHashKey(light)
+        local carthash = joaat(cart)
+        local cargohash = joaat(cargo)
+        local lighthash = joaat(light)
         local coordsCartSpawn = vector3(cartspawn.x, cartspawn.y, cartspawn.z)
         local coordsEnd = vector3(endcoords.x, endcoords.y, endcoords.z)
         local distance = #(coordsCartSpawn - coordsEnd) 
@@ -124,18 +133,18 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
         Citizen.InvokeNative(0xC0F0417A90402742, vehicle, lighthash)
         TaskEnterVehicle(playerPed, vehicle, 10000, -1, 1.0, 1, 0)
         if showgps == true then
-            StartGpsMultiRoute(GetHashKey("COLOR_RED"), true, true)
+            StartGpsMultiRoute(joaat("COLOR_RED"), true, true)
             AddPointToGpsMultiRoute(endcoords)
             SetGpsMultiRouteRender(true)
         end
-        currentMissionWagon = vehicle
+        currentDeliveryWagon = vehicle
         wagonSpawned = true
-        missionactive = true
-        MissionTimer(missiontime, vehicle, endcoords)
+        deliveryactive = true
+        DeliveryTimer(deliverytime, vehicle, endcoords)
         while true do
             local sleep = 1000
             if wagonSpawned == true then
-                local vehpos = GetEntityCoords(currentMissionWagon, true)
+                local vehpos = GetEntityCoords(currentDeliveryWagon, true)
                 if #(vehpos - endcoords) < 250.0 then
                     sleep = 0
                     DrawText3D(endcoords.x, endcoords.y, endcoords.z + 0.98, Lang:t('label.delivery_point'))
@@ -144,11 +153,11 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
                             ClearGpsMultiRoute(endcoords)
                         end
                         endcoords = nil
-                        DeleteVehicle(currentMissionWagon)
+                        DeleteVehicle(currentDeliveryWagon)
                         wagonSpawned = false
-                        missionactive = false
-                        MissionSecondsRemaining = 0
-                        SetEntityAsNoLongerNeeded(currentMissionWagon)
+                        deliveryactive = false
+                        DeliverySecondsRemaining = 0
+                        SetEntityAsNoLongerNeeded(currentDeliveryWagon)
                         TriggerServerEvent('rsg-delivery:server:givereward', cashreward)
                         lib.notify({ title = Lang:t('success.success_del'), description = Lang:t('success.success_del_descr'), type = 'success' })
                     end
@@ -160,20 +169,20 @@ AddEventHandler('rsg-delivery:client:vehiclespawn', function(deliveryid, cart, c
 end)
 
 ---------------------------------------------------------------------
--- get wagon state / fail mission if damaged
+-- get wagon state / fail delivery if damaged
 ---------------------------------------------------------------------
 Citizen.CreateThread(function()
     while true do
         Wait(1000)
         if wagonSpawned then
-            local drivable = Citizen.InvokeNative(0xB86D29B10F627379, currentMissionWagon, false, false) -- IsVehicleDriveable
+            local drivable = Citizen.InvokeNative(0xB86D29B10F627379, currentDeliveryWagon, false, false) -- IsVehicleDriveable
             if not drivable then
-                lib.notify({ title = 'Mission Failed!', description = 'your mission failed due to damaged wagon!', type = 'inform', duration = 7000 })
-                DeleteVehicle(currentMissionWagon)
+                lib.notify({ title = 'Delivery Failed!', description = 'your delivery failed due to damaged wagon!', type = 'inform', duration = 7000 })
+                DeleteVehicle(currentDeliveryWagon)
                 wagonSpawned = false
-                missionactive = false
-                MissionSecondsRemaining = 0
-                SetEntityAsNoLongerNeeded(currentMissionWagon)
+                deliveryactive = false
+                DeliverySecondsRemaining = 0
+                SetEntityAsNoLongerNeeded(currentDeliveryWagon)
                 wagonSpawned = false
                 ClearGpsMultiRoute()
                 lib.hideTextUI()

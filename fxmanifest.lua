@@ -3,7 +3,7 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 game 'rdr3'
 
 description 'rsg-delivery'
-version '1.0.9'
+version '1.1.0'
 
 shared_scripts {
     '@ox_lib/init.lua',
@@ -14,8 +14,7 @@ shared_scripts {
 }
 
 client_scripts {
-    'client/client.lua',
-    'client/menu.lua',
+    'client/client.lua'
 }
 
 server_scripts {
