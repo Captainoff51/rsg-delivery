@@ -65,7 +65,7 @@ Config.DeliveryLocations = {
     {   -- mcfarlands ranch -> tumbleweed  ( distance 3214 / $32.14)
         name         = Lang:t('primary.delivery_loc5'),
         deliveryid   = 'delivery5',
-        cartspawn    = vector4(-2352.572, -2398.797, 62.261191, 175.71217), 
+        cartspawn    = vector4(-2358.09, -2385.02, 62.25, 191.99), 
         cart         = 'wagon05x',
         cargo        = 'pg_teamster_wagon05x_gen',
         light        = 'pg_teamster_wagon05x_lightupgrade3',
