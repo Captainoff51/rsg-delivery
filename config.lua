@@ -26,7 +26,7 @@ Config.DeliveryLocations = {
     {   -- valentine -> blackwater ( distance 2200 / $22.00)
         name         = Lang:t('primary.delivery_loc2'),
         deliveryid   = 'delivery2',
-        cartspawn    = vector4(-343.9931, 809.86401, 116.8878, 132.8083), 
+        cartspawn    = vector4(-343.9931, 809.86401, 116.8878, 132.8083),
         cart         = 'wagon04x',
         cargo        = 'pg_teamster_wagon04x_perishables',
         light        = 'pg_teamster_wagon04x_lightupgrade3',
@@ -39,7 +39,7 @@ Config.DeliveryLocations = {
     {   -- blackwater -> strawberry ( distance 1303 / $13.03)
         name         = Lang:t('primary.delivery_loc3'),
         deliveryid   = 'delivery3',
-        cartspawn    = vector4(-757.1296, -1225.244, 43.74446, 0.8211954), 
+        cartspawn    = vector4(-757.1296, -1225.244, 43.74446, 0.8211954),
         cart         = 'cart01',
         cargo        = 'pg_teamster_cart01_breakables',
         light        = 'pg_teamster_cart01_lightupgrade3',
@@ -52,7 +52,7 @@ Config.DeliveryLocations = {
     {   -- strawberry -> mcfarlands ranch ( distance 2033 / $20.33)
         name         = Lang:t('primary.delivery_loc4'),
         deliveryid   = 'delivery4',
-        cartspawn    = vector4(-1788.618, -439.5259, 155.38444, 80.844512), 
+        cartspawn    = vector4(-1788.618, -439.5259, 155.38444, 80.844512),
         cart         = 'wagon02x',
         cargo        = 'pg_vl_rancher01',
         light        = 'pg_teamster_wagon02x_lightupgrade3',
@@ -65,7 +65,7 @@ Config.DeliveryLocations = {
     {   -- mcfarlands ranch -> tumbleweed  ( distance 3214 / $32.14)
         name         = Lang:t('primary.delivery_loc5'),
         deliveryid   = 'delivery5',
-        cartspawn    = vector4(-2358.09, -2385.02, 62.25, 191.99), 
+        cartspawn    = vector4(-2358.09, -2385.02, 62.25, 191.99),
         cart         = 'wagon05x',
         cargo        = 'pg_teamster_wagon05x_gen',
         light        = 'pg_teamster_wagon05x_lightupgrade3',
@@ -78,7 +78,7 @@ Config.DeliveryLocations = {
     {   -- tumbleweed -> annesburg  ( distance 9595 / $95.95)
         name         = Lang:t('primary.delivery_loc6'),
         deliveryid   = 'delivery6',
-        cartspawn    = vector4(-5523.004, -2936.102, -1.807142, 255.0812), 
+        cartspawn    = vector4(-5523.004, -2936.102, -1.807142, 255.0812),
         cart         = 'wagon02x',
         cargo        = 'pg_gunforhire03x',
         light        = 'pg_teamster_wagon02x_lightupgrade3',
@@ -91,7 +91,7 @@ Config.DeliveryLocations = {
     {   -- oil fields -> van horn  ( distance 2528 / $25.28)
         name         = Lang:t('primary.delivery_loc7'),
         deliveryid   = 'delivery7',
-        cartspawn    = vector4(439.78543, 699.36962, 117.06561, 122.11738), 
+        cartspawn    = vector4(439.78543, 699.36962, 117.06561, 122.11738),
         cart         = 'oilWagon02x',
         cargo        = '',
         light        = '',
